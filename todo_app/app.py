@@ -9,7 +9,7 @@ app.config.from_object(Config())
 @app.route('/')
 def index():
     ''' landing page '''
-    todos = get_items()
+    todos = sorted(get_items(), reverse=True, key=lambda k: k['status'])
     return render_template('index.html', todos=todos)
 
 @app.route('/update', methods=['POST'])
