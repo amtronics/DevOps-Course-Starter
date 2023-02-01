@@ -21,7 +21,7 @@
         <h3>Status</h3>
         {% for todo in todos %}
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value={{todo.id}} name="completedCheck" {% if todo.status == "Completed" %} disabled checked=true {% endif %}>
+          <input class="form-check-input" type="checkbox" value={{todo.id}} name="completedCheck" {% if todo.status == "Done" %} disabled checked=true {% endif %}>
           <label class="form-check-label" for="defaultCheck1">{{todo.status}}</label>
         </div>
         {% endfor %}
