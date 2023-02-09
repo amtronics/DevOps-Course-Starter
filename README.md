@@ -26,13 +26,20 @@ The project uses a virtual environment to isolate package dependencies. To creat
 $ poetry install
 ```
 
+You're going to be using Trello's API to fetch and save to-do tasks. In order to call their API, you need to first [create an account](https://trello.com/signup), then generate an API key and token by following the [instructions here](https://trello.com/app-key).
+
+
 You'll also need to clone a new `.env` file from the `.env.template` to store local configuration options. This is a one-time operation on first setup:
 
 ```bash
 $ cp .env.template .env  # (first time only)
 ```
 
-The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a [SECRET_KEY](https://flask.palletsprojects.com/en/1.1.x/config/#SECRET_KEY) variable which is used to encrypt the flask session cookie.
+The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change).
+
+The `.env` needs to be updated with the API Key and Token obtained before. There's also a `BOARD_ID` parameter. See the [instructions here](https://developer.atlassian.com/cloud/trello/guides/rest-api/api-introduction/#your-first-api-call) on how to list your boards along with their ids
+
+There's also a [SECRET_KEY](https://flask.palletsprojects.com/en/1.1.x/config/#SECRET_KEY) variable which is used to encrypt the flask session cookie.
 
 ## Running the App
 
