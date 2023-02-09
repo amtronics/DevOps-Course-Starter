@@ -44,7 +44,7 @@ class TrelloAPI():
         # call get_items to initialise in RAM cards and lists properties
         self.get_items()
 
-    def _send_requst(self, url, method='GET', **query):
+    def _send_request(self, url, method='GET', **query):
         '''
         Send a request to Trello API
 
@@ -74,24 +74,11 @@ class TrelloAPI():
         self.lists = []
         url = f"boards/{self.BOARD_ID}/lists"
         query = {"cards": "open", "card_fields": "id,name,idList"}
-        for trello_list in self._send_requst(url, **query):
+        for trello_list in self._send_request(url, **query):
             for card in trello_list['cards']:
                 self.cards.append(Item.from_trello_card(card, trello_list))
             self.lists.append(TrelloList.from_trello_list(trello_list))
         return self.cards
-
-    def get_item(self, id):
-        """
-        Fetches the saved item with the specified ID.
-
-        Args:
-            id: The ID of the item.
-
-        Returns:
-            item: The saved item, or None if no items match the specified ID.
-        """
-        items = self.cards
-        return next((item for item in items if item['id'] == int(id)), None)
 
     def save_item(self, id, new_status):
         """
@@ -104,7 +91,7 @@ class TrelloAPI():
         lst_id = [lst.id for lst in self.lists if lst.name == new_status][0]
         url = f"cards/{id}"
         query = {"idList": lst_id}
-        self._send_requst(url, 'PUT', **query)
+        self._send_request(url, 'PUT', **query)
 
     def add_item(self, name):
         """
@@ -115,4 +102,4 @@ class TrelloAPI():
         """
         lst_id = [lst.id for lst in self.lists if lst.name == "To Do"][0]
         query = {"idList": lst_id, "name": name}
-        self._send_requst("cards/", 'POST', **query)
+        self._send_request("cards/", 'POST', **query)

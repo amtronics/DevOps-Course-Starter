@@ -7,48 +7,51 @@
     <p class="lead">A To-Do App by @amtronics</p>
   </div>
 
-  <form action="{{url_for('add_item')}}" method="post">
-    <div class="row justify-content-md-center">
-      <div class="col">
-        <h3>Items</h3>
-      </div>
-      <div class="col">
-        <h3>Current Status</h3>
-      </div>
-      <div class="col">
-        <h3>Change Status</h3>
-      </div>
-    </div>
-    {% for todo in todos %}
-    <div class="row justify-content-md-center">
-      <div class="col">
-        {{todo.name}}
-      </div>
-      <div class="col">
-        {{todo.status}}
-      </div>
-      <div class="col">
-        <div class="btn-group mr-2" role="group" aria-label="status change group", id="buttonGroup">
-          <button class="btn btn-secondary btn-sm" formaction="{{url_for('complete_item', id=todo.id, status='Done')}}" {% if todo.status == "Done" %} disabled checked=true {% endif %}>Done</button>
-          <button class="btn btn-secondary btn-sm" formaction="{{url_for('complete_item', id=todo.id, status='To Do')}}" {% if todo.status == "To Do" %} disabled checked=true {% endif %}>To Do</button>
+  <div class="container">
+    <form method="post">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <h3>Items</h3>
+        </div>
+        <div class="col">
+          <h3>Current Status</h3>
+        </div>
+        <div class="col">
+          <h3>Change Status</h3>
         </div>
       </div>
-    </div>
-    {% endfor %}
-    <div class="row justify-content-lg-center">
-      <div class="col">
-        <div class="form-group">
-          <input type="text" class="form-control" name="new_todo" placeholder="new to-do item" value="{{ request.form['new_todo'] }}">
+      {% for todo in todos %}
+      <div class="row justify-content-md-center">
+        <div class="col">
+          {{todo.name}}
+        </div>
+        <div class="col">
+          {{todo.status}}
+        </div>
+        <div class="col">
+          <div class="btn-group mr-2" role="group" aria-label="status change group", id="buttonGroup">
+            <button class="btn btn-secondary btn-sm" formaction="{{url_for('complete_item', id=todo.id, status='Done')}}" {% if todo.status == "Done" %} disabled checked=true {% endif %}>Done</button>
+            <button class="btn btn-secondary btn-sm" formaction="{{url_for('complete_item', id=todo.id, status='To Do')}}" {% if todo.status == "To Do" %} disabled checked=true {% endif %}>To Do</button>
+          </div>
         </div>
       </div>
-      <div class="col">
+      {% endfor %}
+    </form>  
+    <form action="{{url_for('add_item')}}" method="post">
+      <div class="row justify-content-lg-center">
+        <div class="col">
+          <div class="form-group">
+            <input type="text" class="form-control" name="new_todo" placeholder="new to-do item" value="{{ request.form['new_todo'] }}">
+          </div>
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
       </div>
-      <div class="col">
-        <button type="submit" class="btn btn-primary">Add</button>
-      </div>
-    </div>
-    
-  </form>
+    </form>
+  </div>
 {% endblock %}
 
   

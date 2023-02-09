@@ -26,7 +26,7 @@ The project uses a virtual environment to isolate package dependencies. To creat
 $ poetry install
 ```
 
-You're going to be using Trello’s API to fetch and save to-do tasks. In order to call their API, you need to first [create an account](https://trello.com/signup), then generate an API key and token by following the [instructions here](https://trello.com/app-key).
+You're going to be using Trello's API to fetch and save to-do tasks. In order to call their API, you need to first [create an account](https://trello.com/signup), then generate an API key and token by following the [instructions here](https://trello.com/app-key).
 
 
 You'll also need to clone a new `.env` file from the `.env.template` to store local configuration options. This is a one-time operation on first setup:
