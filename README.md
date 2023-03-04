@@ -63,3 +63,18 @@ Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser
 ## App Operation
 
 Enter the title of new to-do item in the input field and press the submit button. The list of items at the top of the page should update with the new entry
+
+## App Testing
+
+All tests are under `tests` subdirectory. To run all tests, invoke `pytest` at the root of the project or from `tests` subdirectory:
+```bash
+pytest .\todo_app\tests
+```
+
+You can also run indivual tests as shown below:
+```bash
+pytest .\todo_app\tests\test_view_model.py::test_view_model_done_items_property
+```
+
+Please refer to [Pytest docs](https://docs.pytest.org/en/7.1.x/how-to/usage.html) for more info.
+
