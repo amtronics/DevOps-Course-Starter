@@ -1,4 +1,3 @@
-from functools import cached_property
 from urllib3.exceptions import InsecureRequestWarning
 import typing
 import requests
@@ -10,8 +9,12 @@ requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
 
 class Item:
+    TODO = "To Do"
+    DONE = "Done"
     ''' Class to represent an item (card)'''
-    def __init__(self, id, name, status='To Do'):
+    def __init__(self, id, name, status=None):
+        if not status:
+            status = Item.TODO
         self.id = id
         self.name = name
         self.status = status
@@ -38,8 +41,8 @@ class TrelloAPI():
         self.API_KEY = os.environ.get('API_KEY')
         self.API_TOKEN = os.environ.get('API_TOKEN')
         self.BOARD_ID = os.environ.get('BOARD_ID')
-        self.cards : typing.List[Item] = []
-        self.lists : typing.List[TrelloList] = []
+        self.cards: typing.List[Item] = []
+        self.lists: typing.List[TrelloList] = []
 
         # call get_items to initialise in RAM cards and lists properties
         self.get_items()
@@ -100,6 +103,6 @@ class TrelloAPI():
         Args:
             name: The name of the item.
         """
-        lst_id = [lst.id for lst in self.lists if lst.name == "To Do"][0]
+        lst_id = [lst.id for lst in self.lists if lst.name == Item.TODO][0]
         query = {"idList": lst_id, "name": name}
         self._send_request("cards/", 'POST', **query)
