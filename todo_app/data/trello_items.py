@@ -63,7 +63,7 @@ class TrelloAPI():
         _query = {"key": self.API_KEY,
                   "token": self.API_TOKEN}
         _query.update(query)
-        response = requests.request(method, url, headers=headers, params=_query, verify=False)
+        response = requests.request(method=method, url=url, headers=headers, params=_query, verify=False)
         return response.json()
 
     def get_items(self):
