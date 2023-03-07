@@ -21,11 +21,22 @@ def stub(url, **kwargs):
         fake_response_data = [{
             'id': '123abc',
             'name': 'To Do',
-            'cards': [{'id': '456', 'name': 'Test card'}]
-        }]
-        return StubResponse(fake_response_data)
+            'cards': [{'id': '456', 'name': 'Test card 1'}]
+        }, {
+            'id': '456fgh',
+            'name': 'Done',
+            'cards': [{'id': '666', 'name': 'Test card 2'}]
+        }
+        ]
+    elif kwargs['method'] == 'PUT':
+        fake_response_data = {
+            'id': 'xxx',
+            'name': 'Test card x',
+        }
+    else:
+        raise Exception(f'Integration test did not expect URL "{url}"')
 
-    raise Exception(f'Integration test did not expect URL "{url}"')
+    return StubResponse(fake_response_data)
 
 
 @pytest.fixture
@@ -45,9 +56,23 @@ def client(monkeypatch):
         yield client
 
 
-def test_index_page(client):
+def test_index(client):
     # Make a request to our app's index page
     response = client.get('/')
 
     assert response.status_code == 200
-    assert 'Test card' in response.data.decode()
+    assert 'Test card 1' in response.data.decode()
+
+
+def test_complete_item(client):
+    # Make a request to our app's complete_item endpoint
+    response = client.post('/complete_item/456/Done')
+
+    assert response.status_code == 302
+
+
+def test_add_item(client):
+    # Make a request to our app's add_item endpoint
+    response = client.post('/add_item')
+
+    assert response.status_code == 302
