@@ -68,12 +68,12 @@ Enter the title of new to-do item in the input field and press the submit button
 
 All tests are under `tests` directory. To run all tests, invoke `pytest` at the root of the project or from `tests` directory:
 ```bash
-pytest .\todo_app\tests
+poetry run pytest .\todo_app\tests
 ```
 
 You can also run indivual tests as shown below:
 ```bash
-pytest .\todo_app\tests\data\test_view_model.py::test_view_model_done_items_property
+poetry run pytest -k test_view_model_done_items_property
 ```
 
 Please refer to [Pytest docs](https://docs.pytest.org/en/7.1.x/how-to/usage.html) for more info.
