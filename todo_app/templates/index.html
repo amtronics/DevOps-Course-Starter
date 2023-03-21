@@ -9,42 +9,33 @@
 
   <div class="container">
     <form method="post">
-      <div class="row justify-content-md-center">
-        <div class="col">
-          <h3>Items</h3>
-        </div>
-        <div class="col">
-          <h3>Current Status</h3>
-        </div>
-        <div class="col">
-          <h3>Change Status</h3>
-        </div>
-      </div>
-      {% for todo in todos %}
-      <div class="row justify-content-md-center">
-        <div class="col">
-          {{todo.name}}
-        </div>
-        <div class="col">
-          {{todo.status}}
-        </div>
-        <div class="col">
-          <div class="btn-group mr-2" role="group" aria-label="status change group", id="buttonGroup">
-            <button class="btn btn-secondary btn-sm" formaction="{{url_for('complete_item', id=todo.id, status='Done')}}" {% if todo.status == "Done" %} disabled checked=true {% endif %}>Done</button>
-            <button class="btn btn-secondary btn-sm" formaction="{{url_for('complete_item', id=todo.id, status='To Do')}}" {% if todo.status == "To Do" %} disabled checked=true {% endif %}>To Do</button>
+      {% for filter, title in [(view_model.todo_items, 'To Do'), (view_model.done_items, 'Done')] %}
+        <div class="row mt-md-5">
+          <div class="col">
+            <h3>{{title}} Items</h3>
           </div>
         </div>
-      </div>
+        {% for item in filter %}
+        <div class="row">
+          <div class="col">
+            {{item.name}}
+          </div>
+          <div class="col">
+            <div class="btn-group mr-2" role="group" aria-label="status change group", id="buttonGroup">
+              <button class="btn btn-secondary btn-sm" formaction="{{url_for('complete_item', id=item.id, status='Done')}}" {% if item.status == "Done" %} disabled checked=true {% endif %}>Done</button>
+              <button class="btn btn-secondary btn-sm" formaction="{{url_for('complete_item', id=item.id, status='To Do')}}" {% if item.status == "To Do" %} disabled checked=true {% endif %}>To Do</button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
       {% endfor %}
-    </form>  
+    </form> 
     <form action="{{url_for('add_item')}}" method="post">
-      <div class="row justify-content-lg-center">
+      <div class="row mt-md-5">
         <div class="col">
           <div class="form-group">
-            <input type="text" class="form-control" name="new_todo" placeholder="new to-do item" value="{{ request.form['new_todo'] }}">
+            <input type="text" class="form-control" name="new_item" placeholder="new to-do item" value="{{ request.form['new_item'] }}">
           </div>
-        </div>
-        <div class="col">
         </div>
         <div class="col">
           <button type="submit" class="btn btn-primary">Add</button>
