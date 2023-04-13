@@ -1,0 +1,75 @@
+- name: Install To-Do App on new web server
+  hosts: webservers
+  remote_user: ec2-user
+
+  vars_prompt:
+    - name: secret_key
+      prompt: What is the secret-key?
+      unsafe: true
+
+    - name: api_key
+      prompt: What is the api-key?
+      unsafe: true
+
+    - name: api_token
+      prompt: What is the api-token?
+      unsafe: true
+
+    - name: board_id
+      prompt: What is the board-id?
+      unsafe: true
+      default: 63da522fd33259df63985911
+
+
+  tasks:
+  - name: Install Git & Python3
+    ansible.builtin.yum:
+      name: 
+        - git
+        - python3
+      state: present
+    become: yes
+
+  - name: Get poetry
+    ansible.builtin.shell: 
+      cmd: curl -sSL https://install.python-poetry.org | python3 - >> get_poetry.log
+      creates: get_poetry.log
+
+  - name: Create todoapp folder
+    ansible.builtin.file:
+      path: /opt/todoapp
+      state: directory
+      owner: ec2-user
+    become: yes
+
+  - name: Git checkout todoapp
+    ansible.builtin.git:
+      repo: 'https://github.com/amtronics/DevOps-Course-Starter.git'
+      dest: /opt/todoapp/
+      version: module4
+
+  - name: Poetry install
+    ansible.builtin.shell:
+      cmd: /home/ec2-user/.local/bin/poetry install >> poetry_install.log
+      chdir: /opt/todoapp/
+      creates: poetry_install.log
+
+  - name: Create .env file
+    ansible.builtin.template:
+      src: .env.j2
+      dest: /opt/todoapp/.env
+      owner: ec2-user
+
+  - name: Copy the service from control node
+    ansible.builtin.copy:
+      src: todoapp.service
+      dest: /etc/systemd/system/todoapp.service
+      # mode: '+x'
+    become: yes
+
+  - name: Start the todoapp service
+    ansible.builtin.systemd:
+      name: todoapp
+      state: restarted
+      daemon_reload: true
+    become: yes
