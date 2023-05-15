@@ -78,3 +78,16 @@ poetry run pytest -k test_view_model_done_items_property
 
 Please refer to [Pytest docs](https://docs.pytest.org/en/7.1.x/how-to/usage.html) for more info.
 
+## Using Docker Containerisation
+
+Build images using:
+```
+$ docker build --target development --tag todo-app:dev .
+$ docker build --target production --tag todo-app:prod .
+```
+
+Run containers using:
+```
+$ docker run --env-file .env --publish 8080:8000 todo-app:prod
+$ docker run --env-file .env --publish 8080:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/opt/app/todo_app todo-app:dev
+```
