@@ -92,7 +92,7 @@ $ docker run --env-file .env --publish 8080:8000 todo-app:prod
 $ docker run --env-file .env --publish 8080:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/opt/app/todo_app todo-app:dev
 ```
 
-### Running Tests
+#### Running Tests
 
 Build images using:
 ```
