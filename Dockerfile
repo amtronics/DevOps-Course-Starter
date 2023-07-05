@@ -14,3 +14,7 @@ FROM base as development
 ENV WEBAPP_PORT=5000
 EXPOSE ${WEBAPP_PORT}
 ENTRYPOINT ["poetry", "run", "flask", "run", "--host=0.0.0.0"]
+
+# testing stage
+FROM base as test
+ENTRYPOINT ["poetry", "run", "pytest"]
