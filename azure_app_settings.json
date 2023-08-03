@@ -1,0 +1,32 @@
+[
+    {
+      "name": "FLASK_APP",
+      "value": "todo_app/app",
+      "slotSetting": false
+    },
+    {
+      "name": "SECRET_KEY",
+      "value": "secret-key",
+      "slotSetting": false
+    },
+    {
+        "name": "WEBSITES_PORT",
+        "value": "8000",
+        "slotSetting": false
+    },
+    {
+        "name": "API_KEY",
+        "value": "",
+        "slotSetting": false
+    },
+    {
+        "name": "API_TOKEN",
+        "value": "",
+        "slotSetting": false
+    },
+    {
+        "name": "BOARD_ID",
+        "value": "",
+        "slotSetting": false
+    }
+]

@@ -103,3 +103,26 @@ Run container using:
 ```
 $ docker run todo-app:test
 ```
+
+## Azure
+
+### Build & publish the image
+
+```
+$ docker login
+$ docker build --target production --tag amtronics/todo-app:prod .
+$ docker push amtronics/todo-app:prod
+```
+The image is uploaded to Docker Hub:
+https://hub.docker.com/r/amtronics/todo-app
+
+
+### Create WebApp
+
+```
+$ az login
+$ az appservice plan create --resource-group Cohort27_AmiGho_ProjectExercise -n module8_amigho_sp --sku B1 --is-linux
+$ az webapp create --resource-group Cohort27_AmiGho_ProjectExercise --plan module8_amigho_sp --name agmod8 --deployment-container-image-name docker.io/amtronics/todo-app:prod
+$ az webapp config appsettings set -g Cohort27_AmiGho_ProjectExercise -n agmod8 --settings @azure_app_settings.json
+$ curl -dH -X POST "https://\$<deployment_username>:<deployment_password>@<webapp_name>.scm.azurewebsites.net/docker/hook"
+```
