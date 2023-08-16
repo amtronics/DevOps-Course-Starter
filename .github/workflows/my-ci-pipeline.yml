@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - uses: satackey/action-docker-layer-caching@v0.0.11
+      continue-on-error: true
     - run: docker build --target test --tag todo-app .
     - run: docker run todo-app
   deploy:
@@ -26,6 +28,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - uses: actions/checkout@v3
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
       - run: docker build --target production --tag "amtronics/todo-app:$GITHUB_SHA" .
       - run: docker push "amtronics/todo-app:$GITHUB_SHA"
       - run: curl -dH -X POST '${{ secrets.WEBHOOK_URL }}'
