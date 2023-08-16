@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: docker build --tag amtronics/todo-app:${{GITHUB_SHA}} .
-    - run: docker run todo-app:${{GITHUB_SHA}}
+    - run: docker build --tag amtronics/todo-app:$GITHUB_SHA .
+    - run: docker run todo-app:$GITHUB_SHA
   deploy:
     name: push image to dockerhub
     needs: build
@@ -25,5 +25,5 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}      
-      - run: docker push amtronics/todo-app:${{GITHUB_SHA}}
+      - run: docker push amtronics/todo-app:$GITHUB_SHA
       - run: curl -dH -X POST '${{ secrets.WEBHOOK_URL }}'
