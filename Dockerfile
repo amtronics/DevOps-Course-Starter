@@ -1,7 +1,8 @@
-FROM python:3.7-buster as base
-RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python3 -
-WORKDIR /opt/app
-ENV PATH=/opt/poetry/bin:$PATH
+FROM python:3.9-buster as base
+#RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python3 -
+# WORKDIR /opt/app
+# ENV PATH=/opt/poetry/bin:$PATH
+pip3 install poetry
 COPY . /opt/app
 RUN poetry config virtualenvs.create false && poetry install
 
