@@ -1,25 +1,25 @@
 from flask import Flask, render_template, request, redirect, url_for
 from todo_app.flask_config import Config
-from todo_app.data.trello_items import TrelloAPI
+from todo_app.data.db_items import DatabaseAPI
 from todo_app.data.view_model import ViewModel
 
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config())
-    trello = TrelloAPI()
+    database = DatabaseAPI()
 
     @app.route('/')
     def index():
         ''' landing page '''
-        items = sorted(trello.get_items(), reverse=True, key=lambda k: (k.status, k.name))
+        items = database.items
         item_view_model = ViewModel(items)
         return render_template('index.html', view_model=item_view_model)
 
     @app.route('/complete_item/<id>/<status>', methods=['POST'])
     def complete_item(id, status):
         ''' Mark item <id> as complete or to do'''
-        trello.save_item(id, status)
+        database.save_item(id, status)
         return redirect(url_for('index'))
 
     @app.route('/add_item', methods=['POST'])
@@ -28,7 +28,7 @@ def create_app():
         item_name = request.form.get('new_item')
         if item_name:
             # brief sanity check
-            trello.add_item(item_name)
+            database.add_item(item_name)
         return redirect(url_for('index'))
 
     return app

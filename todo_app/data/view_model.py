@@ -1,4 +1,4 @@
-from todo_app.data.trello_items import Item
+from todo_app.data.db_items import Item
 
 
 class ViewModel:
@@ -11,8 +11,8 @@ class ViewModel:
 
     @property
     def done_items(self):
-        return [it for it in self.items if it.status == Item.DONE]
+        return [it for it in self.items if it["status"] == Item.DONE]
 
     @property
     def todo_items(self):
-        return [it for it in self.items if it.status == Item.TODO]
+        return [it for it in self.items if it["status"] == Item.TODO]
