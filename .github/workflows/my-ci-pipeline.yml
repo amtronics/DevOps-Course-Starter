@@ -20,7 +20,7 @@ jobs:
     name: push image to dockerhub
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref_name == 'main' && github.event_name == 'push' || github.even_name == 'pull_request'
+    if: (github.ref_name == 'main' && github.event_name == 'push') || github.even_name == 'pull_request'
     steps:
       - name: Login to Dockerhub
         uses: docker/login-action@v2
