@@ -12,33 +12,28 @@ def create_app():
     database = DatabaseAPI()
     app.register_blueprint(blueprint, url_prefix="/login")
 
-    def login_required(func):
-        def wrapper():
-            if not github.authorized:
-                redirect(url_for("github.login"))
-            else:
-                func()
-        return wrapper
-
-    @login_required
     @app.route('/')
     def index():
         ''' landing page '''
+        if not github.authorized:
+            return redirect(url_for("github.login"))
         items = database.items
         item_view_model = ViewModel(items)
         return render_template('index.html', view_model=item_view_model)
 
-    @login_required
     @app.route('/complete_item/<id>/<status>', methods=['POST'])
     def complete_item(id, status):
         ''' Mark item <id> as complete or to do'''
+        if not github.authorized:
+            return redirect(url_for("github.login"))
         database.save_item(id, status)
         return redirect(url_for('index'))
 
-    @login_required
     @app.route('/add_item', methods=['POST'])
     def add_item():
         ''' for creating new to-do items via the form in index'''
+        if not github.authorized:
+            return redirect(url_for("github.login"))
         item_name = request.form.get('new_item')
         if item_name:
             # brief sanity check
