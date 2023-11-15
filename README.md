@@ -124,3 +124,11 @@ $ az webapp create --resource-group Cohort27_AmiGho_ProjectExercise --plan modul
 $ az webapp config appsettings set -g Cohort27_AmiGho_ProjectExercise -n agmod8 --settings @azure_app_settings.json
 $ curl -dH -X POST "https://\$<deployment_username>:<deployment_password>@<webapp_name>.scm.azurewebsites.net/docker/hook"
 ```
+
+## Data Security
+
+### Encryption @ Rest
+
+As a platform as a service (PaaS), all user data stored in Azure Cosmos DB is encrypted at rest and in transport. In other words, encryption at rest is "on" by default. There are no controls to turn it off or on. Azure Cosmos DB uses AES-256 encryption on all regions where the account is running.
+
+Refer to [Data encryption in Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/database-encryption-at-rest) for more information 
