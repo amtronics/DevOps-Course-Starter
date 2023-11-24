@@ -4,10 +4,11 @@ from todo_app.flask_config import Config
 from todo_app.data.db_items import DatabaseAPI
 from todo_app.data.view_model import ViewModel
 from todo_app.oauth import blueprint
-
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 def create_app():
     app = Flask(__name__)
+    app.wsgi_app = ProxyFix(app.wsgi_app)
     app.config.from_object(Config())
     database = DatabaseAPI()
     app.register_blueprint(blueprint, url_prefix="/login")
